@@ -17,13 +17,13 @@ export default function NotFound() {
       </div>
 
       {/* Primary error status code heading */}
-      <h1 className="text-6xl font-black text-slate-800 tracking-tight">404</h1>
+      <h1 className="text-6xl font-black text-slate-800 dark:text-slate-100 tracking-tight">404</h1>
       
       {/* Friendly descriptive error message */}
-      <h2 className="text-xl font-bold text-slate-700 mt-4">Page Not Found</h2>
+      <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200 mt-4">Page Not Found</h2>
       
       {/* Informative description paragraph clarifying page loss */}
-      <p className="text-slate-500 mt-2 max-w-md mx-auto">
+      <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-2 max-w-md mx-auto">
         The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
       </p>
 
@@ -42,7 +42,7 @@ export default function NotFound() {
         {/* Alternative historical trigger button to go back to previous page in window history */}
         <button 
           onClick={() => window.history.back()}
-          className="inline-flex items-center justify-center bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-semibold px-5 py-3 rounded-xl transition-all duration-200"
+          className="inline-flex items-center justify-center bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-5 py-3 rounded-xl transition-all duration-200"
         >
           {/* Back arrows symbol */}
           <ArrowLeft className="w-5 h-5 mr-2" />

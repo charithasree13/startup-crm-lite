@@ -13,7 +13,7 @@
 export default function StatusBadge({ status }) {
   // Map standard stages to specific aesthetic styles aligning with requirements
   const statusStyles = {
-    New: 'text-slate-700 bg-slate-100 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
+    New: 'text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
     Contacted: 'text-amber-700 bg-amber-50 border-amber-100 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-900/30',
     'Meeting Scheduled': 'text-purple-700 bg-purple-50 border-purple-100 dark:bg-purple-950/30 dark:text-purple-400 dark:border-purple-900/30',
     'Proposal Sent': 'text-blue-700 bg-blue-50 border-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-900/30',

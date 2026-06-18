@@ -94,13 +94,13 @@ export default function Dashboard() {
       {/* Dashboard Page Header */}
       <div>
         <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">CRM Dashboard</h1>
-        <p className="text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">
           Welcome back! Here is a summary of your startup's pipeline activity.
         </p>
       </div>
 
       {/* Stats Cards Grid - Responsive: 1 col on mobile, 2 on tablet, 4 on desktop */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <StatsCard
             key={index}
@@ -121,9 +121,9 @@ export default function Dashboard() {
       />
 
       {/* Two-Column Responsive Layout for Leads Details and Funnel Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Leads Table (Takes 2/3 of space on desktop) */}
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recent Leads Table (Takes half space on desktop) */}
+        <div>
           <RecentLeads leads={sampleLeads} />
         </div>
 

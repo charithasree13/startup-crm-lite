@@ -121,7 +121,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
         <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">
           {isEditMode ? 'Edit Lead Details' : 'Add New Lead'}
         </h2>
-        <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+        <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-0.5">
           {isEditMode ? 'Modify existing lead profile parameters.' : 'Fill in the credentials to insert a lead.'}
         </p>
       </div>
@@ -129,7 +129,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Lead Name */}
         <div className="flex flex-col">
-          <label htmlFor="lead-name" className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+          <label htmlFor="lead-name" className="text-xs font-semibold text-slate-600 dark:text-slate-400 dark:text-slate-500 mb-1.5">
             Full Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -142,7 +142,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             aria-required="true"
             aria-invalid={errors.name ? 'true' : 'false'}
             aria-describedby={errors.name ? 'lead-name-error' : undefined}
-            className={`w-full px-4 py-2.5 text-sm text-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200 ${
+            className={`w-full px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200 ${
               errors.name ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 dark:border-slate-700'
             }`}
           />
@@ -155,7 +155,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
 
         {/* Company Name */}
         <div className="flex flex-col">
-          <label htmlFor="lead-company" className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+          <label htmlFor="lead-company" className="text-xs font-semibold text-slate-600 dark:text-slate-400 dark:text-slate-500 mb-1.5">
             Company Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -168,7 +168,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             aria-required="true"
             aria-invalid={errors.company ? 'true' : 'false'}
             aria-describedby={errors.company ? 'lead-company-error' : undefined}
-            className={`w-full px-4 py-2.5 text-sm text-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200 ${
+            className={`w-full px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200 ${
               errors.company ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 dark:border-slate-700'
             }`}
           />
@@ -181,7 +181,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
 
         {/* Email Address */}
         <div className="flex flex-col">
-          <label htmlFor="lead-email" className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+          <label htmlFor="lead-email" className="text-xs font-semibold text-slate-600 dark:text-slate-400 dark:text-slate-500 mb-1.5">
             Email Address <span className="text-red-500">*</span>
           </label>
           <input
@@ -194,7 +194,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             aria-required="true"
             aria-invalid={errors.email ? 'true' : 'false'}
             aria-describedby={errors.email ? 'lead-email-error' : undefined}
-            className={`w-full px-4 py-2.5 text-sm text-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200 ${
+            className={`w-full px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200 ${
               errors.email ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 dark:border-slate-700'
             }`}
           />
@@ -207,7 +207,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
 
         {/* Phone Number */}
         <div className="flex flex-col">
-          <label htmlFor="lead-phone" className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+          <label htmlFor="lead-phone" className="text-xs font-semibold text-slate-600 dark:text-slate-400 dark:text-slate-500 mb-1.5">
             Phone Number
           </label>
           <input
@@ -217,13 +217,13 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             placeholder="+1 (555) 000-0000"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 text-sm text-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
+            className="w-full px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200"
           />
         </div>
 
         {/* Lead Status */}
         <div className="flex flex-col">
-          <label htmlFor="lead-status" className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+          <label htmlFor="lead-status" className="text-xs font-semibold text-slate-600 dark:text-slate-400 dark:text-slate-500 mb-1.5">
             Lead Status Stage
           </label>
           <select
@@ -231,7 +231,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
+            className="w-full px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200"
           >
             {statusOptions.map((option) => (
               <option key={option} value={option}>
@@ -243,7 +243,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
 
         {/* Marketing Lead Source */}
         <div className="flex flex-col">
-          <label htmlFor="lead-source" className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+          <label htmlFor="lead-source" className="text-xs font-semibold text-slate-600 dark:text-slate-400 dark:text-slate-500 mb-1.5">
             Marketing Source
           </label>
           <select
@@ -251,7 +251,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             name="source"
             value={formData.source}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
+            className="w-full px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200"
           >
             {sourceOptions.map((option) => (
               <option key={option} value={option}>

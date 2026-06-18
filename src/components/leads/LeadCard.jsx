@@ -54,7 +54,7 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
             <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 transition-colors">
               {lead.name}
             </h3>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-0.5">
               {lead.company}
             </p>
           </div>
@@ -72,7 +72,7 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
               className="flex items-center hover:text-blue-500 transition-colors"
               aria-label={`Send email to ${lead.email}`}
             >
-              <Mail className="w-4 h-4 mr-2 text-slate-400 shrink-0" />
+              <Mail className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500 shrink-0" />
               <span className="truncate">{lead.email}</span>
             </a>
           )}
@@ -80,22 +80,22 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
           {/* Phone Info */}
           {lead.phone && (
             <div className="flex items-center">
-              <Phone className="w-4 h-4 mr-2 text-slate-400 shrink-0" />
+              <Phone className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500 shrink-0" />
               <span className="truncate">{lead.phone}</span>
             </div>
           )}
 
           {/* Source Info */}
           {lead.source && (
-            <div className="flex items-center text-xs text-slate-500 dark:text-slate-400">
-              <Info className="w-4 h-4 mr-2 text-slate-400 shrink-0" />
+            <div className="flex items-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
+              <Info className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500 shrink-0" />
               <span>Source: <span className="font-semibold text-slate-700 dark:text-slate-300">{lead.source}</span></span>
             </div>
           )}
 
           {/* Date Added */}
           {lead.date && (
-            <div className="flex items-center text-xs text-slate-400 dark:text-slate-500">
+            <div className="flex items-center text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <Calendar className="w-4 h-4 mr-2 shrink-0" />
               <span>Added: {formatDate(lead.date)}</span>
             </div>
@@ -107,7 +107,7 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
       <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-50 dark:border-slate-800/60">
         <button
           onClick={() => onEdit(lead)}
-          className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all cursor-pointer"
+          className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all cursor-pointer"
           aria-label={`Edit lead ${lead.name}`}
           title="Edit Lead"
         >
@@ -115,7 +115,7 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
         </button>
         <button
           onClick={() => onDelete(lead.id)}
-          className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all cursor-pointer"
+          className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all cursor-pointer"
           aria-label={`Delete lead ${lead.name}`}
           title="Delete Lead"
         >

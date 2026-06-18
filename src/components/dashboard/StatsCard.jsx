@@ -65,8 +65,8 @@ export default function StatsCard({ title, value, icon: Icon, change, color }) {
       <div className="mt-4">
         <p className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">{value}</p>
         <div className="flex items-center justify-between mt-1">
-          <p className="text-sm font-medium text-slate-400 dark:text-slate-500">{title}</p>
-          <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+          <p className="text-sm font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">{title}</p>
+          <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">
             vs last month
           </span>
         </div>

@@ -56,7 +56,7 @@ export default function RecentLeads({ leads = [] }) {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">Recent Leads</h2>
-            <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-0.5">
               Overview of the last 5 leads added to your workspace
             </p>
           </div>
@@ -64,7 +64,7 @@ export default function RecentLeads({ leads = [] }) {
 
         {recentLeads.length === 0 ? (
           // Empty State
-          <div className="py-12 text-center text-slate-400 dark:text-slate-500 font-medium">
+          <div className="py-12 text-center text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">
             No recent leads available.
           </div>
         ) : (
@@ -72,7 +72,7 @@ export default function RecentLeads({ leads = [] }) {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[500px]">
               <thead>
-                <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 text-xs font-semibold uppercase tracking-wider">
+                <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 text-xs font-semibold uppercase tracking-wider">
                   <th className="py-3 px-4 pl-0">Lead Details</th>
                   <th className="py-3 px-4">Company</th>
                   <th className="py-3 px-4">Status</th>
@@ -85,7 +85,7 @@ export default function RecentLeads({ leads = [] }) {
                     {/* Lead Name and Email */}
                     <td className="py-3.5 px-4 pl-0">
                       <div className="font-semibold text-slate-800 dark:text-slate-200">{lead.name}</div>
-                      <div className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{lead.email}</div>
+                      <div className="text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-0.5">{lead.email}</div>
                     </td>
                     
                     {/* Company Name */}
@@ -111,7 +111,7 @@ export default function RecentLeads({ leads = [] }) {
                     </td>
                     
                     {/* Date Added */}
-                    <td className="py-3.5 px-4 text-right pr-0 text-slate-500 dark:text-slate-400 font-medium">
+                    <td className="py-3.5 px-4 text-right pr-0 text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">
                       {formatDate(lead.date)}
                     </td>
                   </tr>

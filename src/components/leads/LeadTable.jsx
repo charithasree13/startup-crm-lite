@@ -49,7 +49,7 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
     <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-xs overflow-hidden">
       {leads.length === 0 ? (
         // Empty State
-        <div className="py-16 text-center text-slate-400 dark:text-slate-500 font-medium">
+        <div className="py-16 text-center text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">
           No leads match the active search or filters.
         </div>
       ) : (
@@ -57,7 +57,7 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 text-xs font-semibold uppercase tracking-wider bg-slate-50/50 dark:bg-slate-800/30">
+              <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500 text-xs font-semibold uppercase tracking-wider bg-slate-50/50 dark:bg-slate-800/30">
                 <th className="py-4 px-6">Name</th>
                 <th className="py-4 px-6">Company</th>
                 <th className="py-4 px-6">Status</th>
@@ -96,12 +96,12 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
                           href={`mailto:${lead.email}`}
                           className="inline-flex items-center text-xs hover:text-blue-500 transition-colors"
                         >
-                          <Mail className="w-3.5 h-3.5 mr-1.5 text-slate-400 shrink-0" />
+                          <Mail className="w-3.5 h-3.5 mr-1.5 text-slate-400 dark:text-slate-500 shrink-0" />
                           {lead.email}
                         </a>
                       )}
                       {lead.phone && (
-                        <span className="inline-flex items-center text-xs text-slate-400 dark:text-slate-500">
+                        <span className="inline-flex items-center text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">
                           <Phone className="w-3.5 h-3.5 mr-1.5 shrink-0" />
                           {lead.phone}
                         </span>
@@ -110,14 +110,14 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
                   </td>
                   
                   {/* Lead Source */}
-                  <td className="py-4 px-6 font-medium text-slate-500 dark:text-slate-400">
+                  <td className="py-4 px-6 font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500">
                     {lead.source || 'Website'}
                   </td>
                   
                   {/* Date Added */}
                   <td className="py-4 px-6">
-                    <span className="inline-flex items-center text-xs text-slate-500 dark:text-slate-400 font-medium">
-                      <Calendar className="w-3.5 h-3.5 mr-1.5 text-slate-400 shrink-0" />
+                    <span className="inline-flex items-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">
+                      <Calendar className="w-3.5 h-3.5 mr-1.5 text-slate-400 dark:text-slate-500 shrink-0" />
                       {formatDate(lead.date)}
                     </span>
                   </td>
@@ -127,7 +127,7 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
                     <div className="flex items-center justify-center space-x-1.5">
                       <button
                         onClick={() => onEdit(lead)}
-                        className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 rounded-lg transition-all cursor-pointer"
+                        className="p-2 text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 rounded-lg transition-all cursor-pointer"
                         aria-label={`Edit lead ${lead.name}`}
                         title="Edit Lead"
                       >
@@ -135,7 +135,7 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
                       </button>
                       <button
                         onClick={() => onDelete(lead.id)}
-                        className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-all cursor-pointer"
+                        className="p-2 text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-all cursor-pointer"
                         aria-label={`Delete lead ${lead.name}`}
                         title="Delete Lead"
                       >

@@ -33,18 +33,18 @@ export default function QuickActions({ onAddLead, onViewLeads, onExportData }) {
         {/* View All Leads Action */}
         <button
           onClick={onViewLeads}
-          className="inline-flex items-center justify-center space-x-2 py-3 px-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:shadow-xs transition-all duration-200 cursor-pointer"
+          className="inline-flex items-center justify-center space-x-2 py-3 px-4 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:shadow-xs transition-all duration-200 cursor-pointer"
         >
-          <List className="w-5 h-5 text-slate-500 dark:text-slate-400 shrink-0" />
+          <List className="w-5 h-5 text-slate-500 dark:text-slate-400 dark:text-slate-500 shrink-0" />
           <span>View All Leads</span>
         </button>
 
         {/* Export Data Action */}
         <button
           onClick={onExportData}
-          className="inline-flex items-center justify-center space-x-2 py-3 px-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:shadow-xs transition-all duration-200 cursor-pointer"
+          className="inline-flex items-center justify-center space-x-2 py-3 px-4 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:shadow-xs transition-all duration-200 cursor-pointer"
         >
-          <Download className="w-5 h-5 text-slate-500 dark:text-slate-400 shrink-0" />
+          <Download className="w-5 h-5 text-slate-500 dark:text-slate-400 dark:text-slate-500 shrink-0" />
           <span>Export Data</span>
         </button>
       </div>
