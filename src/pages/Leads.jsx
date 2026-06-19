@@ -1,6 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Plus, LayoutGrid, Table, X } from 'lucide-react';
+import { Plus, LayoutGrid, Table, X, Download } from 'lucide-react';
 import toast from 'react-hot-toast';
+
+// Import CSV helper utility
+import { exportLeadsToCSV } from '../utils/csvHelpers';
 
 // Import lead context hook for centralized state management
 import { useLeads } from '../context/LeadContext';
@@ -145,6 +148,32 @@ export default function Leads() {
     }
   };
 
+  /**
+   * Action Handler: Exports currently filtered leads array to CSV.
+   */
+  const handleExportLeads = () => {
+    const exportPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          if (!filteredLeads || filteredLeads.length === 0) {
+            reject(new Error('No leads matching the active filters to export.'));
+            return;
+          }
+          exportLeadsToCSV(filteredLeads, 'Startup_CRM_Leads.csv');
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      }, 1000);
+    });
+
+    toast.promise(exportPromise, {
+      loading: 'Preparing lead data export...',
+      success: 'Startup_CRM_Leads.csv exported successfully!',
+      error: (err) => err.message || 'Failed to export data.',
+    });
+  };
+
   return (
     <div className="space-y-6 animate-fade-in pb-12">
       {/* Header Panel */}
@@ -156,15 +185,28 @@ export default function Leads() {
           </p>
         </div>
         
-        {/* Create Lead Trigger Button */}
-        <button
-          onClick={handleOpenAddModal}
-          className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer text-sm"
-          aria-haspopup="dialog"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          <span>Add New Lead</span>
-        </button>
+        {/* Actions Button Group */}
+        <div className="flex items-center gap-3">
+          {/* Export Leads CSV Button */}
+          <button
+            onClick={handleExportLeads}
+            className="inline-flex items-center justify-center bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 font-semibold px-4 py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer text-sm"
+            title="Export leads matching active filters to CSV"
+          >
+            <Download className="w-5 h-5 mr-2 text-slate-500 dark:text-slate-400 shrink-0" />
+            <span>Export CSV</span>
+          </button>
+
+          {/* Create Lead Trigger Button */}
+          <button
+            onClick={handleOpenAddModal}
+            className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-xl shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer text-sm"
+            aria-haspopup="dialog"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            <span>Add New Lead</span>
+          </button>
+        </div>
       </div>
 
       {/* Control Filter Toolbar */}

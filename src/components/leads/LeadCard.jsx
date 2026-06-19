@@ -94,10 +94,10 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
           )}
 
           {/* Date Added */}
-          {lead.date && (
+          {(lead.date || lead.createdAt) && (
             <div className="flex items-center text-xs text-slate-400 dark:text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <Calendar className="w-4 h-4 mr-2 shrink-0" />
-              <span>Added: {formatDate(lead.date)}</span>
+              <span>Added: {formatDate(lead.date || lead.createdAt)}</span>
             </div>
           )}
         </div>

@@ -27,8 +27,8 @@ export default function RecentLeads({ leads = [] }) {
   // Extract and sort leads by date descending, taking the top 5 records
   const recentLeads = [...leads]
     .sort((a, b) => {
-      const dateA = a.date ? new Date(a.date) : new Date(0);
-      const dateB = b.date ? new Date(b.date) : new Date(0);
+      const dateA = a.date ? new Date(a.date) : (a.createdAt ? new Date(a.createdAt) : new Date(0));
+      const dateB = b.date ? new Date(b.date) : (b.createdAt ? new Date(b.createdAt) : new Date(0));
       return dateB - dateA;
     })
     .slice(0, 5);
@@ -112,7 +112,7 @@ export default function RecentLeads({ leads = [] }) {
                     
                     {/* Date Added */}
                     <td className="py-3.5 px-4 text-right pr-0 text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">
-                      {formatDate(lead.date)}
+                      {formatDate(lead.date || lead.createdAt)}
                     </td>
                   </tr>
                 ))}

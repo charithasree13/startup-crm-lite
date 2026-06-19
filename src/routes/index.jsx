@@ -25,49 +25,52 @@ function MainLayout() {
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   return (
-    // Flexbox container establishing a row layout on md+ and col on mobile
-    <div className="flex flex-col md:flex-row bg-slate-50 dark:bg-slate-900 min-h-screen transition-colors duration-200">
-      
-      {/* Mobile Top Header (Hidden on tablet/desktop) */}
-      <header className="md:hidden flex items-center justify-between p-4 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-0 z-30 shadow-xs">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-md shadow-blue-500/20">
-            <Rocket className="w-4 h-4" />
+    // Outer background wrapper for centering on extra large screens
+    <div className="min-h-screen bg-slate-200 dark:bg-slate-950 flex justify-center transition-colors duration-200">
+      {/* Flexbox container establishing a row layout on md+ and col on mobile, constrained max-width on 2xl */}
+      <div className="flex flex-col md:flex-row bg-slate-50 dark:bg-slate-900 min-h-screen w-full 2xl:max-w-[1440px] 2xl:shadow-2xl transition-colors duration-200 relative overflow-hidden">
+        
+        {/* Mobile Top Header (Hidden on tablet/desktop) */}
+        <header className="md:hidden flex items-center justify-between p-4 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-0 z-30 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+              <Rocket className="w-4 h-4" />
+            </div>
+            <h2 className="font-bold text-slate-800 dark:text-slate-100 text-lg leading-none">CRM Lite</h2>
           </div>
-          <h2 className="font-bold text-slate-800 dark:text-slate-100 text-lg leading-none">CRM Lite</h2>
-        </div>
-        <div className="flex items-center gap-4">
-          <DarkModeToggle />
-          <button 
-            onClick={() => setIsMobileDrawerOpen(true)}
-            className="p-2 -mr-2 text-slate-500 dark:text-slate-400 focus:outline-hidden"
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-        </div>
-      </header>
+          <div className="flex items-center gap-4">
+            <DarkModeToggle />
+            <button 
+              onClick={() => setIsMobileDrawerOpen(true)}
+              className="p-2 -mr-2 text-slate-500 dark:text-slate-400 focus:outline-hidden"
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </header>
 
-      {/* Render the sidebar navigation menu */}
-      <Sidebar 
-        isMobileDrawerOpen={isMobileDrawerOpen} 
-        closeMobileDrawer={() => setIsMobileDrawerOpen(false)} 
-      />
-      
-      {/* Main content body panel filling remaining layout space */}
-      {/* pb-20 on mobile to account for the fixed bottom navigation */}
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto pb-20 md:pb-8">
+        {/* Render the sidebar navigation menu */}
+        <Sidebar 
+          isMobileDrawerOpen={isMobileDrawerOpen} 
+          closeMobileDrawer={() => setIsMobileDrawerOpen(false)} 
+        />
         
-        {/* Suspense handles showing a placeholder spinner while lazy pages are downloaded */}
-        <Suspense fallback={<LoadingSpinner />}>
+        {/* Main content body panel filling remaining layout space */}
+        {/* pb-20 on mobile to account for the fixed bottom navigation */}
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto pb-20 md:pb-8">
           
-          {/* Outlet is the router placeholder where matched child route components render */}
-          <Outlet />
+          {/* Suspense handles showing a placeholder spinner while lazy pages are downloaded */}
+          <Suspense fallback={<LoadingSpinner />}>
+            
+            {/* Outlet is the router placeholder where matched child route components render */}
+            <Outlet />
+            
+          </Suspense>
           
-        </Suspense>
+        </main>
         
-      </main>
-      
+      </div>
     </div>
   );
 }

@@ -2,6 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Users, Target, DollarSign, Clock } from 'lucide-react';
 
+// Import centralized state and CSV export utility
+import { useLeads } from '../context/LeadContext';
+import { exportLeadsToCSV } from '../utils/csvHelpers';
+
 // Import our custom modular dashboard components
 import StatsCard from '../components/dashboard/StatsCard';
 import PipelineOverview from '../components/dashboard/PipelineOverview';
@@ -17,6 +21,7 @@ import QuickActions from '../components/dashboard/QuickActions';
  */
 export default function Dashboard() {
   const navigate = useNavigate();
+  const { leads } = useLeads();
 
   // Mock leads array used to feed both RecentLeads and PipelineOverview components
   const sampleLeads = [
@@ -78,14 +83,28 @@ export default function Dashboard() {
   };
 
   /**
-   * Action Handler: Simulates exporting lead workspace data to CSV.
+   * Action Handler: Exports actual lead workspace data to CSV.
    */
   const handleExportData = () => {
-    const exportPromise = new Promise((resolve) => setTimeout(resolve, 1500));
+    const exportPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          if (!leads || leads.length === 0) {
+            reject(new Error('No leads available to export.'));
+            return;
+          }
+          exportLeadsToCSV(leads, 'Startup_CRM_Leads.csv');
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      }, 1000);
+    });
+
     toast.promise(exportPromise, {
       loading: 'Preparing lead data export...',
       success: 'Startup_CRM_Leads.csv exported successfully!',
-      error: 'Failed to export data.',
+      error: (err) => err.message || 'Failed to export data.',
     });
   };
 

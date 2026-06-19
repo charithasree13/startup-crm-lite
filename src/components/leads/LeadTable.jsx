@@ -118,7 +118,7 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
                   <td className="py-4 px-6">
                     <span className="inline-flex items-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">
                       <Calendar className="w-3.5 h-3.5 mr-1.5 text-slate-400 dark:text-slate-500 shrink-0" />
-                      {formatDate(lead.date)}
+                      {formatDate(lead.date || lead.createdAt)}
                     </span>
                   </td>
                   
