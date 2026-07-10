@@ -22,7 +22,10 @@ dotenv.config();
  * Exits immediately if critical settings are missing.
  */
 const checkRequiredEnvVars = () => {
-  const required = ['MONGODB_URI', 'JWT_SECRET', 'PORT'];
+  const required = ['MONGODB_URI', 'JWT_SECRET'];
+  if (!process.env.VERCEL) {
+    required.push('PORT');
+  }
   const missing = required.filter(key => !process.env[key]);
   if (missing.length > 0) {
     console.error(`[FATAL ERROR] Missing required environment variables on boot: ${missing.join(', ')}`);
@@ -170,13 +173,15 @@ const startServer = async () => {
   // 2. Connect to Database first
   await connectDB();
 
-  const PORT = process.env.PORT || 5000;
-  const NODE_ENV = process.env.NODE_ENV || 'development';
+  if (!process.env.VERCEL) {
+    const PORT = process.env.PORT || 5000;
+    const NODE_ENV = process.env.NODE_ENV || 'development';
 
-  // 3. Start listening for network requests
-  serverInstance = app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT} in ${NODE_ENV} mode`);
-  });
+    // 3. Start listening for network requests
+    serverInstance = app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT} in ${NODE_ENV} mode`);
+    });
+  }
 };
 
 startServer();
