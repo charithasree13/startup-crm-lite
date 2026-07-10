@@ -1,19 +1,11 @@
-import { useState } from 'react';
+// Import NavLink from react-router-dom to enable spa links with active status highlighting
 import { NavLink } from 'react-router-dom';
 // Import essential icons from the lucide-react package to decorate navigation options
-import { 
-  LayoutDashboard, Users, BarChart3, Rocket, X, 
-  User, Mail, Phone, Lock, LogIn, UserPlus, LogOut, Shield 
-} from 'lucide-react';
-import toast from 'react-hot-toast';
+import { LayoutDashboard, Users, BarChart3, Rocket, X } from 'lucide-react';
 import DarkModeToggle from './DarkModeToggle';
-import { useAuth } from '../../context/AuthContext';
 
 // Define the Sidebar component as a functional React component
 export default function Sidebar({ isMobileDrawerOpen, closeMobileDrawer }) {
-  const { user, logout } = useAuth();
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-
   // Define navigation menu items containing pathways, display labels, and icons
   const menuItems = [
     {
@@ -82,7 +74,7 @@ export default function Sidebar({ isMobileDrawerOpen, closeMobileDrawer }) {
       </div>
 
       {/* Main navigation menu list filling vertical workspace */}
-      <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">
+      <nav className="flex-1 p-4 space-y-1.5">
         {/* Map over navigation configuration items */}
         {menuItems.map((item) => {
           // Resolve icon identifier into a React Component variable name
@@ -112,75 +104,6 @@ export default function Sidebar({ isMobileDrawerOpen, closeMobileDrawer }) {
           );
         })}
       </nav>
-
-      {/* Admin Profile Section */}
-      {user && (
-        <div className="relative p-4 border-t border-slate-100 dark:border-slate-800 flex justify-center">
-          {/* Circular Avatar Trigger */}
-          <button
-            onClick={() => setIsProfileOpen(!isProfileOpen)}
-            className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm shrink-0 border border-blue-200/50 dark:border-blue-800/30 hover:scale-105 active:scale-95 transition-all shadow-md cursor-pointer focus:outline-hidden"
-            aria-label="Toggle admin user details"
-          >
-            {user.username ? user.username.slice(0, 2).toUpperCase() : user.name.slice(0, 2).toUpperCase()}
-          </button>
-
-          {/* Floating Details Popover */}
-          {isProfileOpen && (
-            <>
-              {/* Click-outside helper overlay */}
-              <div 
-                className="fixed inset-0 z-40" 
-                onClick={() => setIsProfileOpen(false)} 
-              />
-              
-              {/* Popover Card */}
-              <div className="absolute bottom-16 left-4 right-4 z-50 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-slate-950/80 animate-fade-in space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm shrink-0 border border-blue-100 dark:border-blue-800/20">
-                    {user.username ? user.username.slice(0, 2).toUpperCase() : user.name.slice(0, 2).toUpperCase()}
-                  </div>
-                  <div className="overflow-hidden text-left">
-                    <div className="flex items-center gap-1.5 mb-0.5">
-                      <span className="font-bold text-slate-850 dark:text-slate-200 text-xs truncate max-w-[90px]" title={user.username || user.name}>
-                        {user.username || user.name}
-                      </span>
-                      <span className="px-1.5 py-0.5 text-[9px] font-extrabold tracking-wider uppercase bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-md border border-emerald-100 dark:border-emerald-900/30">
-                        {user.role}
-                      </span>
-                    </div>
-                    <p className="text-[10px] text-slate-400 dark:text-slate-500 truncate" title={user.email}>{user.email}</p>
-                  </div>
-                </div>
-
-                <div className="border-t border-slate-100 dark:border-slate-800 pt-2.5 space-y-2 text-xxs font-semibold text-slate-550 dark:text-slate-400 text-left">
-                  {user.mobile && (
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5 text-slate-450 dark:text-slate-500" />
-                      <span>{user.mobile}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-2">
-                    <Mail className="w-3.5 h-3.5 text-slate-450 dark:text-slate-500" />
-                    <span className="truncate" title={user.email}>{user.email}</span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    setIsProfileOpen(false);
-                    logout();
-                  }}
-                  className="w-full mt-2 py-2 px-3 text-xs font-bold text-rose-600 dark:text-rose-455 hover:bg-rose-50 dark:hover:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 rounded-lg flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                  Sign Out
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      )}
 
       {/* Sidebar footer section with disclaimer / version */}
       <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-4">

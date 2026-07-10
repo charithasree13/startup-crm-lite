@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+AU+VIC+Guides&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-playwrite: "Playwrite AU VIC Guides", cursive;
+    --color-primary: #2563eb;
+    --color-success: #22C55E;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+
+    --color-background: #F8FAFC;
+    --color-card: #FFFFFF;
+
+    --color-text-dark: #0F172A;
+    --color-text-gray: #64748B;
+}
