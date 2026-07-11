@@ -94,13 +94,20 @@ const allowedOrigins = [
   'https://your-app.vercel.app',
   'http://localhost:5173',
   'http://localhost:5174',
-].filter(Boolean); // Filter out empty or undefined env variables
+]
+  .filter(Boolean)
+  .map(origin => origin.replace(/\/$/, '')); // remove trailing slashes
 
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow browser client requests with no origin header (like mobile apps, curl, postman)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+      const sanitizedOrigin = origin.replace(/\/$/, '');
+      if (allowedOrigins.includes(sanitizedOrigin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
