@@ -96,7 +96,14 @@ const allowedOrigins = [
   'http://localhost:5174',
 ]
   .filter(Boolean)
-  .map(origin => origin.replace(/\/$/, '')); // remove trailing slashes
+  .flatMap(origin => {
+    const trimmed = origin.replace(/\/$/, '');
+    // If the origin doesn't start with a protocol, allow http, https, and the raw domain
+    if (!/^https?:\/\//i.test(trimmed)) {
+      return [`https://${trimmed}`, `http://${trimmed}`, trimmed];
+    }
+    return [trimmed];
+  });
 
 app.use(
   cors({
