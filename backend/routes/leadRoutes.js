@@ -50,6 +50,12 @@ const leadValidation = [
     .optional()
     .isIn(LEAD_SOURCES)
     .withMessage(`Source must be one of: ${LEAD_SOURCES.join(', ')}`),
+  body('value')
+    .optional()
+    .isNumeric()
+    .withMessage('Deal value must be a number')
+    .custom((val) => Number(val) >= 0)
+    .withMessage('Deal value cannot be negative'),
 ];
 
 /**

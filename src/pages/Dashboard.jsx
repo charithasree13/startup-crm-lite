@@ -23,45 +23,130 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { leads } = useLeads();
 
-  // Mock leads array used to feed both RecentLeads and PipelineOverview components
-  const sampleLeads = [
-    { id: 1, name: 'Sarah Jenkins', company: 'Apex Global', email: 'sjenkins@apex.io', phone: '+1 (555) 234-5678', value: 12500, status: 'Qualified', date: '2026-06-12' },
-    { id: 2, name: 'Michael Chen', company: 'NextGen Solutions', email: 'm.chen@nextgen.com', phone: '+1 (555) 876-5432', value: 8200, status: 'Contacted', date: '2026-06-14' },
-    { id: 3, name: 'Elena Rostova', company: 'Siberia Tech', email: 'elena@siberia.tech', phone: '+7 (909) 123-4567', value: 25000, status: 'New', date: '2026-06-15' },
-    { id: 4, name: 'Marcus Brody', company: 'Adventure Corp', email: 'brody@adventure.com', phone: '+1 (555) 345-6789', value: 5000, status: 'Lost', date: '2026-06-08' },
-    { id: 5, name: 'David Miller', company: 'Miller Brewing', email: 'david@miller.co', phone: '+1 (555) 456-7890', value: 18500, status: 'Qualified', date: '2026-06-11' },
-    { id: 6, name: 'Aisha Rahman', company: 'Indus Ventures', email: 'aisha@indus.vc', phone: '+91 98765 43210', value: 30000, status: 'New', date: '2026-06-15' },
-    { id: 7, name: 'Oliver Hansen', company: 'Nordic Designs', email: 'oliver@nordic.dk', phone: '+45 33 44 55 66', value: 15000, status: 'Contacted', date: '2026-06-13' },
-    { id: 8, name: 'Yuki Tanaka', company: 'Kyoto Robotics', email: 'tanaka@kyoto.jp', phone: '+81 75 123 4567', value: 45000, status: 'Qualified', date: '2026-06-10' },
-  ];
+  // Calculate dynamic stats from real leads
+  const now = new Date();
+  const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+  const totalLeads = leads.length;
+
+  // Leads Month-over-Month Growth
+  const leadsThisMonth = leads.filter(l => new Date(l.createdAt || l.date) >= thisMonthStart).length;
+  const leadsLastMonth = leads.filter(l => {
+    const d = new Date(l.createdAt || l.date);
+    return d >= lastMonthStart && d < thisMonthStart;
+  }).length;
+  const leadGrowth = leadsLastMonth > 0
+    ? Math.round(((leadsThisMonth - leadsLastMonth) / leadsLastMonth) * 100)
+    : (leadsThisMonth > 0 ? 100 : 0);
+  const leadGrowthStr = `${leadGrowth >= 0 ? '+' : ''}${leadGrowth}%`;
+
+  // Active Opportunities (New, Contacted, Meeting Scheduled, Proposal Sent)
+  const activeOpportunitiesList = leads.filter(l => l.status !== 'Won' && l.status !== 'Lost');
+  const activeOpportunitiesCount = activeOpportunitiesList.length;
+
+  const activeThisMonth = activeOpportunitiesList.filter(l => new Date(l.createdAt || l.date) >= thisMonthStart).length;
+  const activeLastMonth = leads.filter(l => {
+    const d = new Date(l.createdAt || l.date);
+    return l.status !== 'Won' && l.status !== 'Lost' && d >= lastMonthStart && d < thisMonthStart;
+  }).length;
+  const activeGrowth = activeLastMonth > 0
+    ? Math.round(((activeThisMonth - activeLastMonth) / activeLastMonth) * 100)
+    : (activeThisMonth > 0 ? 100 : 0);
+  const activeGrowthStr = `${activeGrowth >= 0 ? '+' : ''}${activeGrowth}%`;
+
+  // Pipeline Revenue (Sum of deal value for active opportunities)
+  const pipelineRevenue = activeOpportunitiesList.reduce((sum, l) => sum + (Number(l.value) || 0), 0);
+  const pipelineRevenueStr = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(pipelineRevenue);
+
+  const pipelineRevenueThisMonth = activeOpportunitiesList
+    .filter(l => new Date(l.createdAt || l.date) >= thisMonthStart)
+    .reduce((sum, l) => sum + (Number(l.value) || 0), 0);
+  const pipelineRevenueLastMonth = leads
+    .filter(l => {
+      const d = new Date(l.createdAt || l.date);
+      return l.status !== 'Won' && l.status !== 'Lost' && d >= lastMonthStart && d < thisMonthStart;
+    })
+    .reduce((sum, l) => sum + (Number(l.value) || 0), 0);
+  const revenueGrowth = pipelineRevenueLastMonth > 0
+    ? Math.round(((pipelineRevenueThisMonth - pipelineRevenueLastMonth) / pipelineRevenueLastMonth) * 100)
+    : (pipelineRevenueThisMonth > 0 ? 100 : 0);
+  const revenueGrowthStr = `${revenueGrowth >= 0 ? '+' : ''}${revenueGrowth}%`;
+
+  // Avg. Conversion Time (Won status leads, using wonAt or fallbacks)
+  const wonLeads = leads.filter(l => l.status === 'Won');
+  let avgConversionTime = 0;
+  if (wonLeads.length > 0) {
+    const totalDays = wonLeads.reduce((sum, l) => {
+      const created = new Date(l.createdAt || l.date);
+      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || Date.now());
+      const diff = (won - created) / (1000 * 60 * 60 * 24);
+      return sum + Math.max(0, diff);
+    }, 0);
+    avgConversionTime = Number((totalDays / wonLeads.length).toFixed(1));
+  }
+  const avgConversionTimeStr = `${avgConversionTime} Days`;
+
+  // Avg. Conversion Time trend (compare won leads this month vs last month)
+  const wonThisMonth = wonLeads.filter(l => new Date(l.wonAt || l.updatedAt || l.date) >= thisMonthStart);
+  const wonLastMonth = wonLeads.filter(l => {
+    const d = new Date(l.wonAt || l.updatedAt || l.date);
+    return d >= lastMonthStart && d < thisMonthStart;
+  });
+  let avgConversionThisMonth = 0;
+  if (wonThisMonth.length > 0) {
+    const totalDays = wonThisMonth.reduce((sum, l) => {
+      const created = new Date(l.createdAt || l.date);
+      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || Date.now());
+      const diff = (won - created) / (1000 * 60 * 60 * 24);
+      return sum + Math.max(0, diff);
+    }, 0);
+    avgConversionThisMonth = totalDays / wonThisMonth.length;
+  }
+  let avgConversionLastMonth = 0;
+  if (wonLastMonth.length > 0) {
+    const totalDays = wonLastMonth.reduce((sum, l) => {
+      const created = new Date(l.createdAt || l.date);
+      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || Date.now());
+      const diff = (won - created) / (1000 * 60 * 60 * 24);
+      return sum + Math.max(0, diff);
+    }, 0);
+    avgConversionLastMonth = totalDays / wonLastMonth.length;
+  }
+  const conversionTimeGrowth = avgConversionLastMonth > 0
+    ? Number((avgConversionThisMonth - avgConversionLastMonth).toFixed(1))
+    : (avgConversionThisMonth > 0 ? Number(avgConversionThisMonth.toFixed(1)) : 0);
+  const conversionTimeGrowthStr = conversionTimeGrowth === 0 
+    ? '0 Days'
+    : `${conversionTimeGrowth > 0 ? '+' : ''}${conversionTimeGrowth} Days`;
 
   // High-level dashboard summary statistics
   const stats = [
     {
       title: 'Total Leads',
-      value: '1,482',
-      change: '+12.5%',
+      value: totalLeads.toLocaleString(),
+      change: leadGrowthStr,
       icon: Users,
       color: 'primary',
     },
     {
       title: 'Active Opportunities',
-      value: '328',
-      change: '+8.3%',
+      value: activeOpportunitiesCount.toLocaleString(),
+      change: activeGrowthStr,
       icon: Target,
       color: 'success',
     },
     {
       title: 'Pipeline Revenue',
-      value: '$142,500',
-      change: '+18.2%',
+      value: pipelineRevenueStr,
+      change: revenueGrowthStr,
       icon: DollarSign,
       color: 'warning',
     },
     {
       title: 'Avg. Conversion Time',
-      value: '14.2 Days',
-      change: '-2.1 Days', // Decrease is positive trend, colored red/danger here to match color assignment
+      value: avgConversionTimeStr,
+      change: conversionTimeGrowthStr,
       icon: Clock,
       color: 'danger',
     },
@@ -113,7 +198,7 @@ export default function Dashboard() {
       {/* Dashboard Page Header */}
       <div>
         <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">CRM Dashboard</h1>
-        <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">
+        <p className="text-slate-500 dark:text-slate-400 mt-1">
           Welcome back! Here is a summary of your startup's pipeline activity.
         </p>
       </div>
@@ -143,12 +228,12 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Leads Table (Takes half space on desktop) */}
         <div>
-          <RecentLeads leads={sampleLeads} />
+          <RecentLeads leads={leads} />
         </div>
 
         {/* Funnel Pipeline Segment Bar (Takes 1/3 of space on desktop) */}
         <div>
-          <PipelineOverview leads={sampleLeads} />
+          <PipelineOverview leads={leads} />
         </div>
       </div>
     </div>

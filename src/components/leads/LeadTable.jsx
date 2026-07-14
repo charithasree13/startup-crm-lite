@@ -63,6 +63,7 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
                 <th className="py-4 px-6">Status</th>
                 <th className="py-4 px-6">Email / Phone</th>
                 <th className="py-4 px-6">Source</th>
+                <th className="py-4 px-6">Deal Value</th>
                 <th className="py-4 px-6">Date Added</th>
                 <th className="py-4 px-6 text-center">Actions</th>
               </tr>
@@ -112,6 +113,11 @@ export default function LeadTable({ leads = [], onEdit, onDelete }) {
                   {/* Lead Source */}
                   <td className="py-4 px-6 font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500">
                     {lead.source || 'Website'}
+                  </td>
+                  
+                  {/* Deal Value */}
+                  <td className="py-4 px-6 font-semibold text-slate-700 dark:text-slate-300">
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(lead.value || 0)}
                   </td>
                   
                   {/* Date Added */}

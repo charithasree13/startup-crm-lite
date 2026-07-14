@@ -150,6 +150,27 @@ const leadSchema = new Schema(
     },
 
     /**
+     * Estimated deal value of the lead.
+     * @type {Number}
+     * @default 0
+     */
+    value: {
+      type: Number,
+      min: [0, 'Value cannot be negative'],
+      default: 0,
+    },
+
+    /**
+     * Timestamp when the lead status was changed to 'Won'.
+     * @type {Date}
+     */
+    wonAt: {
+      type: Date,
+      default: undefined,
+    },
+
+
+    /**
      * Reference to the User who created / owns this lead.
      * Used for access-control scoping — users should only see their own leads
      * unless they have an admin role.

@@ -1,4 +1,4 @@
-import { Pencil, Trash2, Mail, Phone, Calendar, Info } from 'lucide-react';
+import { Pencil, Trash2, Mail, Phone, Calendar, Info, DollarSign } from 'lucide-react';
 import StatusBadge from './StatusBadge';
 
 /**
@@ -90,6 +90,14 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
             <div className="flex items-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <Info className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500 shrink-0" />
               <span>Source: <span className="font-semibold text-slate-700 dark:text-slate-300">{lead.source}</span></span>
+            </div>
+          )}
+
+          {/* Deal Value Info */}
+          {lead.value !== undefined && (
+            <div className="flex items-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
+              <DollarSign className="w-4 h-4 mr-2 text-emerald-600 dark:text-emerald-500 shrink-0" />
+              <span>Deal Value: <span className="font-semibold text-slate-700 dark:text-slate-300">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(lead.value)}</span></span>
             </div>
           )}
 

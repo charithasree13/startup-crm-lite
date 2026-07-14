@@ -36,7 +36,7 @@ export const getLeads = async (req, res, next) => {
       dateFrom,
       dateTo,
       page = 1,
-      limit = 20,
+      limit = 10000,
       sortBy = 'createdAt',
       sortOrder = 'desc',
     } = req.query;
@@ -75,7 +75,7 @@ export const getLeads = async (req, res, next) => {
     }
 
     const numericPage = Math.max(1, parseInt(page, 10) || 1);
-    const numericLimit = Math.max(1, parseInt(limit, 10) || 20);
+    const numericLimit = Math.max(1, parseInt(limit, 10) || 10000);
     const sortByField = sortBy || 'createdAt';
     const sortDirection = sortOrder === 'asc' ? 1 : -1;
     const sort = { [sortByField]: sortDirection };
@@ -124,7 +124,7 @@ export const getLeads = async (req, res, next) => {
  */
 export const createLead = async (req, res, next) => {
   try {
-    const { name, company, email, phone, status, source, notes } = req.body;
+    const { name, company, email, phone, status, source, notes, value } = req.body;
     console.log(`[createLead] Creating lead for user ${req.user._id}`);
 
     const newLead = await Lead.create({
@@ -135,6 +135,8 @@ export const createLead = async (req, res, next) => {
       status,
       source,
       notes,
+      value: value !== undefined ? Number(value) : 0,
+      wonAt: status === 'Won' ? new Date() : undefined,
       owner: req.user._id,
     });
 
@@ -191,6 +193,14 @@ export const updateLead = async (req, res, next) => {
     // DO NOT allow changing the owner field under any circumstance
     delete updateData.owner;
 
+    if (updateData.status !== undefined) {
+      if (updateData.status === 'Won') {
+        updateData.wonAt = new Date();
+      } else {
+        updateData.wonAt = null;
+      }
+    }
+
     const updatedLead = await Lead.findOneAndUpdate(
       { _id: id, owner: req.user._id },
       updateData,
@@ -230,9 +240,16 @@ export const updateLeadStatus = async (req, res, next) => {
       return errorResponse(res, `Invalid status. Must be one of: ${LEAD_STATUSES.join(', ')}`, 400);
     }
 
+    const updateFields = { status };
+    if (status === 'Won') {
+      updateFields.wonAt = new Date();
+    } else {
+      updateFields.wonAt = null;
+    }
+
     const updatedLead = await Lead.findOneAndUpdate(
       { _id: id, owner: req.user._id },
-      { status },
+      updateFields,
       { new: true, runValidators: true }
     );
 

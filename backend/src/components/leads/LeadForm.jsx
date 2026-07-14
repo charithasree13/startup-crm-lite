@@ -40,6 +40,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
     phone: initialData?.phone || '',
     status: initialData?.status || 'New',
     source: initialData?.source || 'Website',
+    value: initialData?.value !== undefined ? initialData.value : '',
   });
 
   // Keep track of validation error messages
@@ -93,6 +94,13 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
       }
     }
 
+    // Validate Value
+    if (formData.value && isNaN(Number(formData.value))) {
+      newErrors.value = 'Deal value must be a number';
+    } else if (formData.value && Number(formData.value) < 0) {
+      newErrors.value = 'Deal value cannot be negative';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -108,6 +116,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
       onSubmit({
         ...initialData, // Preserve id and date if editing
         ...formData,
+        value: formData.value === '' ? 0 : Number(formData.value),
       });
     }
   };
@@ -219,6 +228,33 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             onChange={handleChange}
             className="w-full px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200"
           />
+        </div>
+
+        {/* Deal Value */}
+        <div className="flex flex-col">
+          <label htmlFor="lead-value" className="text-xs font-semibold text-slate-600 dark:text-slate-400 dark:text-slate-500 mb-1.5">
+            Deal Value ($)
+          </label>
+          <input
+            id="lead-value"
+            name="value"
+            type="number"
+            placeholder="0"
+            value={formData.value}
+            onChange={handleChange}
+            min="0"
+            step="any"
+            aria-invalid={errors.value ? 'true' : 'false'}
+            aria-describedby={errors.value ? 'lead-value-error' : undefined}
+            className={`w-full px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white dark:bg-slate-800 transition-all duration-200 ${
+              errors.value ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 dark:border-slate-700'
+            }`}
+          />
+          {errors.value && (
+            <span id="lead-value-error" className="text-xs text-red-500 mt-1 font-medium">
+              {errors.value}
+            </span>
+          )}
         </div>
 
         {/* Lead Status */}
