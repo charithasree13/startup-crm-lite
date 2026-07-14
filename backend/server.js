@@ -33,6 +33,9 @@ const checkRequiredEnvVars = () => {
 // Create Express application instance
 const app = express();
 
+// Trust the proxy (Render, Cloudflare, etc.) to get correct client IPs for rate limiting
+app.set('trust proxy', 1);
+
 // ---------------------------------------------------------------------------
 // Security & Utility Middlewares
 // ---------------------------------------------------------------------------
@@ -136,7 +139,7 @@ const generalLimiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes window
-  max: 10, // Limit each IP to 10 register/login requests per window
+  max: 100, // Limit each IP to 100 register/login requests per window
   message: 'Too many auth attempts.',
   standardHeaders: true,
   legacyHeaders: false,
