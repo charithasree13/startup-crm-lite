@@ -91,6 +91,7 @@ app.use(morgan(isProduction ? 'combined' : 'dev'));
 // 4. CORS: Enable Cross-Origin Resource Sharing with dynamic origin checking
 const allowedOrigins = [
   process.env.FRONTEND_URL,
+  'https://startup-crm-lite-1-sable.vercel.app',
   'https://your-app.vercel.app',
   'http://localhost:5173',
   'http://localhost:5174',
@@ -114,7 +115,7 @@ app.use(
         return;
       }
       const sanitizedOrigin = origin.replace(/\/$/, '');
-      if (allowedOrigins.includes(sanitizedOrigin)) {
+      if (allowedOrigins.includes(sanitizedOrigin) || sanitizedOrigin.endsWith('.vercel.app')) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
