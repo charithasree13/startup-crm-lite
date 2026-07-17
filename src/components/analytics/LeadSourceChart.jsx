@@ -32,7 +32,7 @@ const LeadSourceChart = memo(({ leadSourceStats = [] }) => {
         </div>
       ) : (
         <div className="space-y-4">
-          {leadSourceStats.map((item, i) => {
+          {leadSourceStats.map((item) => {
             const pct = Math.round((item.count / total) * 100);
             const barWidth = Math.max(8, (item.count / maxCount) * 100);
             const color = getColor(item.source);

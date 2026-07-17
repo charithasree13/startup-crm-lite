@@ -24,7 +24,6 @@ import {
   getTopPerformers,
   getActivityHeatmapData,
   getPeriodGrowth,
-  getLastNMonths,
 } from '../utils/analyticsHelpers';
 
 /**
@@ -45,7 +44,7 @@ export function useAnalytics(dateRange = 'all', customRange = null) {
   const prevPeriodLeads = useMemo(() => {
     if (!Array.isArray(leads) || leads.length === 0) return [];
     const now = new Date();
-    let days = 30;
+    let days;
     if (dateRange === '7d') days = 7;
     else if (dateRange === '30d') days = 30;
     else if (dateRange === '90d') days = 90;

@@ -16,7 +16,9 @@ export default function SearchBar({ value, onChange }) {
 
   // Sync local state when parent resets value externally (e.g. "Clear Filters")
   useEffect(() => {
-    setLocalValue(value);
+    setTimeout(() => {
+      setLocalValue(value);
+    }, 0);
   }, [value]);
 
   // Debounce: propagate changes to parent after 300ms of inactivity
@@ -26,6 +28,7 @@ export default function SearchBar({ value, onChange }) {
     }, 300);
 
     return () => clearTimeout(timerRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localValue]); // intentionally omitting onChange to avoid re-triggering on every render
 
   const handleClear = () => {

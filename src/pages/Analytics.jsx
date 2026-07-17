@@ -5,7 +5,7 @@
  * Fully memoized, responsive, and performant.
  */
 
-import { useState, useCallback, Suspense } from 'react';
+import { useState, useCallback } from 'react';
 import { BarChart3, RefreshCw } from 'lucide-react';
 
 // Hook
@@ -25,7 +25,7 @@ import ForecastCard from '../components/analytics/ForecastCard';
 import ActivityHeatmap from '../components/analytics/ActivityHeatmap';
 import TopPerformersCard from '../components/analytics/TopPerformersCard';
 import EmptyAnalyticsState from '../components/analytics/EmptyAnalyticsState';
-import { LoadingSkeleton } from '../components/analytics/LoadingSkeleton';
+
 
 /**
  * Section wrapper — adds consistent heading + grid layout
@@ -69,7 +69,21 @@ export default function Analytics() {
   if (analytics.isEmpty) {
     return (
       <div className="space-y-6 animate-fade-in">
-        <AnalyticsHeader />
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2.5 mb-1">
+              <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-white" />
+              </div>
+              <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                Analytics Dashboard
+              </h1>
+            </div>
+            <p className="text-slate-500 dark:text-slate-400 text-sm ml-10.5">
+              Track sales performance, conversion trends, and growth insights.
+            </p>
+          </div>
+        </div>
         <EmptyAnalyticsState />
       </div>
     );

@@ -3,16 +3,331 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  --background: #FCF7F2;
+  --surface: #F2E8DF;
+  --primary: #8A5A44;
+  --secondary: #B07D62;
+  --accent: #6B7C54;
+  --text: #2B211C;
+  --text-secondary: #70635C;
+  --border: #DCCEC1;
+  --success: #5C8A63;
+  --warning: #D39A42;
+  --error: #C65A4D;
+
+  /* Heatmap states */
+  --heatmap-0: var(--surface);
+  --heatmap-1: rgba(176, 125, 98, 0.15);
+  --heatmap-2: rgba(176, 125, 98, 0.35);
+  --heatmap-3: rgba(176, 125, 98, 0.6);
+  --heatmap-4: var(--secondary);
+  --heatmap-5: var(--primary);
+
+  /* Light Toast states */
+  --toast-success-bg: rgba(92, 138, 99, 0.1);
+  --toast-success-text: #5C8A63;
+  --toast-success-border: rgba(92, 138, 99, 0.2);
+  --toast-error-bg: rgba(198, 90, 77, 0.1);
+  --toast-error-text: #C65A4D;
+  --toast-error-border: rgba(198, 90, 77, 0.2);
+}
+
+.dark {
+  --background: #181311;
+  --surface: #241D19;
+  --primary: #D09A7A;
+  --secondary: #E2B394;
+  --accent: #A8C18D;
+  --text: #F9F5F2;
+  --text-secondary: #D7CEC8;
+  --border: #3A302B;
+  --success: #7FA686;
+  --warning: #E5B267;
+  --error: #D98377;
+
+  /* Heatmap states in dark mode */
+  --heatmap-0: var(--surface);
+  --heatmap-1: rgba(226, 179, 148, 0.15);
+  --heatmap-2: rgba(226, 179, 148, 0.35);
+  --heatmap-3: rgba(226, 179, 148, 0.6);
+  --heatmap-4: var(--secondary);
+  --heatmap-5: var(--primary);
+
+  /* Dark Toast states */
+  --toast-success-bg: rgba(127, 166, 134, 0.1);
+  --toast-success-text: #7FA686;
+  --toast-success-border: rgba(127, 166, 134, 0.2);
+  --toast-error-bg: rgba(217, 131, 119, 0.1);
+  --toast-error-text: #D98377;
+  --toast-error-border: rgba(217, 131, 119, 0.2);
+}
+
 @theme {
     --font-playwrite: "Playwrite AU VIC Guides", cursive;
-    --color-primary: #2563eb;
-    --color-success: #22C55E;
-    --color-warning: #F59E0B;
-    --color-danger: #EF4444;
+    
+    --color-primary: var(--primary);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-danger: var(--error);
+    --color-error: var(--error);
 
-    --color-background: #F8FAFC;
-    --color-card: #FFFFFF;
+    --color-background: var(--background);
+    --color-card: var(--surface);
 
-    --color-text-dark: #0F172A;
-    --color-text-gray: #64748B;
+    --color-text-dark: var(--text);
+    --color-text-gray: var(--text-secondary);
+
+    /* Intercept default Tailwind colors to direct them to new palette colors */
+    --color-white: var(--surface);
+    --color-slate-50: var(--background);
+    --color-slate-100: var(--border);
+    --color-slate-200: var(--border);
+    --color-slate-300: var(--border);
+    --color-slate-400: var(--text-secondary);
+    --color-slate-500: var(--text-secondary);
+    --color-slate-600: var(--text-secondary);
+    --color-slate-700: var(--text-secondary);
+    --color-slate-800: var(--surface);
+    --color-slate-900: var(--surface);
+    --color-slate-950: var(--background);
+
+    --color-blue-50: rgba(176, 125, 98, 0.1);
+    --color-blue-100: var(--border);
+    --color-blue-500: var(--secondary);
+    --color-blue-600: var(--primary);
+    --color-blue-700: var(--primary);
+    --color-blue-800: var(--primary);
+    --color-blue-900: var(--primary);
+    --color-blue-950: var(--surface);
+
+    --color-emerald-50: var(--toast-success-bg);
+    --color-emerald-100: var(--toast-success-border);
+    --color-emerald-400: var(--success);
+    --color-emerald-500: var(--success);
+    --color-emerald-700: var(--toast-success-text);
+    --color-emerald-900: var(--success);
+    --color-emerald-950: rgba(127, 166, 134, 0.1);
+
+    --color-green-50: var(--toast-success-bg);
+    --color-green-100: var(--toast-success-border);
+    --color-green-500: var(--success);
+    --color-green-600: var(--success);
+    --color-green-950: rgba(127, 166, 134, 0.1);
+
+    --color-amber-50: rgba(211, 154, 66, 0.1);
+    --color-amber-100: rgba(211, 154, 66, 0.2);
+    --color-amber-500: var(--warning);
+    --color-amber-600: var(--warning);
+    --color-amber-950: rgba(211, 154, 66, 0.1);
+
+    --color-red-50: var(--toast-error-bg);
+    --color-red-100: var(--toast-error-border);
+    --color-red-500: var(--error);
+    --color-red-600: var(--error);
+    --color-red-750: var(--toast-error-text);
+    --color-red-950: rgba(198, 90, 77, 0.1);
+}
+
+/* Explicit Text Color Overrides for headings, names, and key contents */
+h1, h2, h3, h4, h5, h6,
+.text-slate-900,
+.text-slate-850,
+.text-slate-800,
+.text-slate-700,
+.text-slate-600 {
+  color: var(--text) !important;
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
+.dark .text-slate-100,
+.dark .text-slate-200,
+.dark .text-slate-300,
+.dark .text-white {
+  color: var(--text) !important;
+}
+
+/* Gray / Secondary text overrides for labels and subtexts */
+.text-slate-500,
+.text-slate-400,
+.text-slate-450,
+.text-slate-550 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-slate-400,
+.dark .text-slate-500 {
+  color: var(--text-secondary) !important;
+}
+
+/* Custom link and active element text colors */
+.text-blue-600,
+.hover\:text-blue-600:hover,
+.group-hover\:text-blue-600:hover {
+  color: var(--primary) !important;
+}
+
+.dark .text-blue-400,
+.dark .hover\:text-blue-400:hover {
+  color: var(--secondary) !important;
+}
+
+/* Explicit Background overrides */
+.bg-slate-50,
+.bg-slate-100 {
+  background-color: var(--background) !important;
+}
+
+.bg-white {
+  background-color: var(--surface) !important;
+}
+
+.dark .bg-slate-950,
+.dark .bg-slate-900 {
+  background-color: var(--background) !important;
+}
+
+.dark .bg-slate-800 {
+  background-color: var(--surface) !important;
+}
+
+/* Sidebar active states */
+.bg-blue-50 {
+  background-color: rgba(176, 125, 98, 0.1) !important;
+}
+
+.dark .bg-blue-900\/30 {
+  background-color: rgba(226, 179, 148, 0.15) !important;
+}
+
+.border-blue-600 {
+  border-color: var(--primary) !important;
+}
+
+/* Explicit Border overrides */
+.border-slate-100,
+.border-slate-200,
+.border-slate-300 {
+  border-color: var(--border) !important;
+}
+
+.dark .border-slate-700,
+.dark .border-slate-800,
+.dark .border-slate-900 {
+  border-color: var(--border) !important;
+}
+
+/* Intercept compiled Tailwind arbitrary values */
+.bg-\[\#2563EB\], .bg-\[\#2563eb\] {
+  background-color: var(--primary) !important;
+}
+.text-\[\#2563EB\], .text-\[\#2563eb\] {
+  color: var(--primary) !important;
+}
+.border-\[\#2563EB\], .border-\[\#2563eb\] {
+  border-color: var(--primary) !important;
+}
+
+.bg-\[\#F59E0B\], .bg-\[\#f59e0b\] {
+  background-color: var(--warning) !important;
+}
+.text-\[\#F59E0B\], .text-\[\#f59e0b\] {
+  color: var(--warning) !important;
+}
+.border-\[\#F59E0B\], .border-\[\#f59e0b\] {
+  border-color: var(--warning) !important;
+}
+
+.bg-\[\#22C55E\], .bg-\[\#22c55e\] {
+  background-color: var(--success) !important;
+}
+.text-\[\#22C55E\], .text-\[\#22c55e\] {
+  color: var(--success) !important;
+}
+.border-\[\#22C55E\], .border-\[\#22c55e\] {
+  border-color: var(--success) !important;
+}
+
+.bg-\[\#EF4444\], .bg-\[\#ef4444\] {
+  background-color: var(--error) !important;
+}
+.text-\[\#EF4444\], .text-\[\#ef4444\] {
+  color: var(--error) !important;
+}
+.border-\[\#EF4444\], .border-\[\#ef4444\] {
+  border-color: var(--error) !important;
+}
+
+.text-\[\#94A3B8\], .text-\[\#94a3b8\] {
+  color: var(--text-secondary) !important;
+}
+.bg-\[\#94A3B8\], .bg-\[\#94a3b8\] {
+  background-color: var(--text-secondary) !important;
+}
+.border-\[\#94A3B8\], .border-\[\#94a3b8\] {
+  border-color: var(--text-secondary) !important;
+}
+
+/* Recharts SVG presentation overrides */
+svg stop[stop-color="#22C55E"],
+svg stop[stop-color="#22c55e"] {
+  stop-color: var(--success) !important;
+}
+
+svg path[stroke="#22C55E"],
+svg path[stroke="#22c55e"] {
+  stroke: var(--success) !important;
+}
+
+svg path[stroke="#E2E8F0"],
+svg path[stroke="#e2e8f0"] {
+  stroke: var(--border) !important;
+}
+
+svg grid[stroke="#F1F5F9"],
+svg line[stroke="#F1F5F9"],
+svg line[stroke="#f1f5f9"] {
+  stroke: var(--border) !important;
+}
+
+svg text[fill="#94A3B8"],
+svg text[fill="#94a3b8"] {
+  fill: var(--text-secondary) !important;
+}
+
+svg g[fill="#22C55E"] path,
+svg g[fill="#22c55e"] path {
+  fill: var(--success) !important;
+}
+
+svg circle[fill="#22C55E"],
+svg circle[fill="#22c55e"] {
+  fill: var(--success) !important;
+}
+
+/* Global inputs and widgets theme corrections */
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+/* Toast Overrides to bypass inline react-hot-toast styles */
+div[style*="background: rgb(236, 253, 245)"],
+div[style*="background-color: rgb(236, 253, 245)"],
+div[style*="background: #ECFDF5"],
+div[style*="background:#ECFDF5"],
+div[style*="background: rgb(236,253,245)"] {
+  background-color: var(--toast-success-bg) !important;
+  color: var(--toast-success-text) !important;
+  border: 1px solid var(--toast-success-border) !important;
+}
+
+div[style*="background: rgb(254, 242, 242)"],
+div[style*="background-color: rgb(254, 242, 242)"],
+div[style*="background: #FEF2F2"],
+div[style*="background:#FEF2F2"],
+div[style*="background: rgb(254,242,242)"] {
+  background-color: var(--toast-error-bg) !important;
+  color: var(--toast-error-text) !important;
+  border: 1px solid var(--toast-error-border) !important;
 }

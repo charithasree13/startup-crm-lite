@@ -3,9 +3,8 @@ import { NavLink } from 'react-router-dom';
 // Import essential icons from the lucide-react package to decorate navigation options
 import { 
   LayoutDashboard, Users, BarChart3, Rocket, X, 
-  User, Mail, Phone, Lock, LogIn, UserPlus, LogOut, Shield 
+  Mail, Phone, LogOut 
 } from 'lucide-react';
-import toast from 'react-hot-toast';
 import DarkModeToggle from './DarkModeToggle';
 import { useAuth } from '../../context/AuthContext';
 

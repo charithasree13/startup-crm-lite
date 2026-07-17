@@ -79,7 +79,7 @@ export default function Dashboard() {
   if (wonLeads.length > 0) {
     const totalDays = wonLeads.reduce((sum, l) => {
       const created = new Date(l.createdAt || l.date);
-      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || Date.now());
+      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || now);
       const diff = (won - created) / (1000 * 60 * 60 * 24);
       return sum + Math.max(0, diff);
     }, 0);
@@ -97,7 +97,7 @@ export default function Dashboard() {
   if (wonThisMonth.length > 0) {
     const totalDays = wonThisMonth.reduce((sum, l) => {
       const created = new Date(l.createdAt || l.date);
-      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || Date.now());
+      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || now);
       const diff = (won - created) / (1000 * 60 * 60 * 24);
       return sum + Math.max(0, diff);
     }, 0);
@@ -107,7 +107,7 @@ export default function Dashboard() {
   if (wonLastMonth.length > 0) {
     const totalDays = wonLastMonth.reduce((sum, l) => {
       const created = new Date(l.createdAt || l.date);
-      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || Date.now());
+      const won = l.wonAt ? new Date(l.wonAt) : new Date(l.updatedAt || l.date || now);
       const diff = (won - created) / (1000 * 60 * 60 * 24);
       return sum + Math.max(0, diff);
     }, 0);

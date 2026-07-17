@@ -7,7 +7,7 @@
 
 import { memo, useState, useCallback } from 'react';
 import {
-  PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend,
+  PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
 } from 'recharts';
 import { STATUS_COLORS } from '../../constants/analyticsColors';
 

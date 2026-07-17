@@ -49,11 +49,6 @@ const AnalyticsFilters = memo(({
     setShowCustom(false);
   }, [onRangeChange, onCustomRange]);
 
-  const activeLabel =
-    dateRange === 'custom' && customRange
-      ? `${customRange.start} → ${customRange.end}`
-      : PRESET_RANGES.find((r) => r.value === dateRange)?.label || 'All Time';
-
   return (
     <div className="flex flex-wrap items-center gap-2 relative">
       {/* Preset filter buttons */}

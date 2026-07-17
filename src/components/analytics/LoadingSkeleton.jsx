@@ -4,7 +4,7 @@
  * Renders card and chart skeletons while data is loading.
  */
 
-import React, { memo } from 'react';
+import { memo } from 'react';
 
 /** Single skeleton block with configurable size */
 const SkeletonBlock = memo(({ className = '' }) => (

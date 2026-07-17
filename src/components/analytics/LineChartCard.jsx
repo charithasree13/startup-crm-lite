@@ -7,7 +7,7 @@
 import { memo } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, ReferenceLine, Dot,
+  ResponsiveContainer, ReferenceLine,
 } from 'recharts';
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -24,7 +24,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const CustomDot = (props) => {
-  const { cx, cy, value } = props;
+  const { cx, cy } = props;
   return (
     <circle
       cx={cx}

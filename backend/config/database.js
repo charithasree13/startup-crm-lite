@@ -14,21 +14,33 @@ dotenv.config();
  * @returns {Promise<void>} Resolves when connection is successfully established
  */
 export const connectDB = async () => {
+  const mongoURI = process.env.MONGODB_URI;
+  if (!mongoURI) {
+    console.error('[DATABASE ERROR] MONGODB_URI environment variable is not defined.');
+    process.exit(1);
+  }
+
   try {
-    const mongoURI = process.env.MONGODB_URI;
-    if (!mongoURI) {
-      throw new Error('MONGODB_URI environment variable is not defined.');
-    }
-
-    // In modern Mongoose versions (8+ / 9+), useNewUrlParser and useUnifiedTopology
-    // are enabled by default and setting them throws an error.
     const conn = await mongoose.connect(mongoURI);
-
     console.log(`MongoDB Atlas Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`Database connection failure: ${error.message}`);
-    // Terminate server process on critical startup failure
-    process.exit(1);
+    console.warn(`[DATABASE WARNING] Primary MongoDB connection failed: ${error.message}`);
+    
+    // Check if the primary URI is already the local fallback to prevent loops
+    const localFallbackURI = 'mongodb://127.0.0.1:27017/startup-crm-lite';
+    if (mongoURI === localFallbackURI) {
+      console.error('[DATABASE FATAL] Local MongoDB connection also failed. Exiting.');
+      process.exit(1);
+    }
+
+    console.log(`[DATABASE INFO] Attempting connection to local MongoDB fallback: ${localFallbackURI}`);
+    try {
+      const connLocal = await mongoose.connect(localFallbackURI);
+      console.log(`[DATABASE SUCCESS] Local MongoDB fallback connected: ${connLocal.connection.host}`);
+    } catch (fallbackError) {
+      console.error(`[DATABASE FATAL] Fallback connection failed: ${fallbackError.message}`);
+      process.exit(1);
+    }
   }
 };
 

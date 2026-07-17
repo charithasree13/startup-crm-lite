@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect, useContext, useCallback, useRef } from 'react';
 import toast from 'react-hot-toast';
 import leadService from '../services/leadService';
@@ -145,10 +146,11 @@ export function LeadProvider({ children }) {
     if (token) {
       fetchLeadsRef.current();
     } else {
-      setLeads([]);
-      setPagination(null);
+      setTimeout(() => {
+        setLeads([]);
+        setPagination(null);
+      }, 0);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const value = {

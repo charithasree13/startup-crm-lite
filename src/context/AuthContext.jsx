@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
@@ -71,7 +72,6 @@ export function AuthProvider({ children }) {
     };
 
     checkSession();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run once on mount only
 
   /**

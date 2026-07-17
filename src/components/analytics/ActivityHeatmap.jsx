@@ -4,7 +4,7 @@
  * Shows lead creation, contact, and meeting activity per day.
  */
 
-import { memo, useState, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { HEATMAP_COLORS } from '../../constants/analyticsColors';
 
 /** Groups 84 daily entries into 12 weeks × 7 days */
@@ -26,7 +26,7 @@ const HeatCell = memo(({ entry, onHover, onLeave }) => {
     <div
       className="w-4 h-4 rounded-sm cursor-pointer transition-all duration-150 hover:ring-2 hover:ring-offset-1 hover:ring-blue-400 hover:scale-125"
       style={{ backgroundColor: color }}
-      onMouseEnter={() => onHover(entry)}
+      onMouseEnter={onHover}
       onMouseLeave={onLeave}
       title={`${entry.date}: ${entry.count} activities`}
     />
@@ -35,9 +35,6 @@ const HeatCell = memo(({ entry, onHover, onLeave }) => {
 HeatCell.displayName = 'HeatCell';
 
 const ActivityHeatmap = memo(({ heatmapData = [] }) => {
-  const [tooltip, setTooltip] = useState(null);
-  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
-
   const weeks = groupIntoWeeks(heatmapData);
 
   // Get last 12 week-start labels (approx month markers)
@@ -57,10 +54,10 @@ const ActivityHeatmap = memo(({ heatmapData = [] }) => {
     return labels;
   })();
 
-  const onHover = useCallback((entry, e) => {
-    setTooltip(entry);
+  const onHover = useCallback(() => {
+    // noop
   }, []);
-  const onLeave = useCallback(() => setTooltip(null), []);
+  const onLeave = useCallback(() => {}, []);
 
   const totalActivity = heatmapData.reduce((s, d) => s + d.count, 0);
   const activeDays = heatmapData.filter((d) => d.count > 0).length;
