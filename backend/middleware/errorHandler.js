@@ -62,6 +62,12 @@ export const errorHandler = (err, req, res, next) => {
     message = 'Your token has expired. Please log in again.';
   }
 
+  // 6. Mongoose Connection / Buffering Timeout Error (HTTP 503 Service Unavailable)
+  else if (errorName === 'MongooseError' || message.includes('buffering timed out')) {
+    statusCode = 503;
+    message = 'Database service is currently unavailable. Please check your MONGODB_URI credentials in Render environment variables.';
+  }
+
   // Log errors during development
   if (process.env.NODE_ENV !== 'production') {
     console.error('--- [Error Logged in Handler] ---');
