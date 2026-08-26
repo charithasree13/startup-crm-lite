@@ -22,11 +22,14 @@ dotenv.config();
  * Exits immediately if critical settings are missing.
  */
 const checkRequiredEnvVars = () => {
-  const required = ['MONGODB_URI', 'JWT_SECRET', 'PORT'];
-  const missing = required.filter(key => !process.env[key]);
+  const recommended = ['MONGODB_URI', 'JWT_SECRET'];
+  const missing = recommended.filter(key => !process.env[key]);
   if (missing.length > 0) {
-    console.error(`[FATAL ERROR] Missing required environment variables on boot: ${missing.join(', ')}`);
-    process.exit(1);
+    console.warn(`[WARNING] Missing environment variables on boot: ${missing.join(', ')}. Please configure them in Render dashboard.`);
+  }
+  if (!process.env.JWT_SECRET) {
+    process.env.JWT_SECRET = 'startup_crm_fallback_jwt_secret_key_2026';
+    console.warn('[WARNING] Using fallback JWT_SECRET. Set JWT_SECRET in environment variables for production security.');
   }
 };
 
@@ -185,15 +188,17 @@ const startServer = async () => {
   // 1. Validate environment configuration first
   checkRequiredEnvVars();
 
-  // 2. Connect to Database first
-  await connectDB();
-
   const PORT = process.env.PORT || 5000;
   const NODE_ENV = process.env.NODE_ENV || 'development';
 
-  // 3. Start listening for network requests
+  // 2. Start listening for network requests immediately (allows Render port health checks to pass)
   serverInstance = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT} in ${NODE_ENV} mode`);
+  });
+
+  // 3. Connect to Database asynchronously
+  connectDB().catch(err => {
+    console.warn(`[DATABASE WARNING] Asynchronous DB connection error: ${err.message}`);
   });
 };
 

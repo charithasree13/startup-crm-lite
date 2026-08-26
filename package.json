@@ -7,7 +7,9 @@
     "dev": "vite",
     "dev:full": "concurrently \"npm run dev\" \"npm run dev --prefix backend\"",
     "start": "concurrently \"npm run dev\" \"npm run start --prefix backend\"",
+    "start:backend": "node backend/server.js",
     "build": "vite build",
+    "build:backend": "npm --prefix backend install",
     "lint": "eslint .",
     "preview": "vite preview"
   },

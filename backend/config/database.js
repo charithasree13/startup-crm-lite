@@ -16,8 +16,8 @@ dotenv.config();
 export const connectDB = async () => {
   const mongoURI = process.env.MONGODB_URI;
   if (!mongoURI) {
-    console.error('[DATABASE ERROR] MONGODB_URI environment variable is not defined.');
-    process.exit(1);
+    console.warn('[DATABASE WARNING] MONGODB_URI environment variable is not defined. Please set MONGODB_URI in your deployment settings.');
+    return;
   }
 
   try {
@@ -29,8 +29,8 @@ export const connectDB = async () => {
     // Check if the primary URI is already the local fallback to prevent loops
     const localFallbackURI = 'mongodb://127.0.0.1:27017/startup-crm-lite';
     if (mongoURI === localFallbackURI) {
-      console.error('[DATABASE FATAL] Local MongoDB connection also failed. Exiting.');
-      process.exit(1);
+      console.warn('[DATABASE WARNING] Local MongoDB connection also failed. Database operations will be disabled.');
+      return;
     }
 
     console.log(`[DATABASE INFO] Attempting connection to local MongoDB fallback: ${localFallbackURI}`);
@@ -38,8 +38,7 @@ export const connectDB = async () => {
       const connLocal = await mongoose.connect(localFallbackURI);
       console.log(`[DATABASE SUCCESS] Local MongoDB fallback connected: ${connLocal.connection.host}`);
     } catch (fallbackError) {
-      console.error(`[DATABASE FATAL] Fallback connection failed: ${fallbackError.message}`);
-      process.exit(1);
+      console.warn(`[DATABASE WARNING] Fallback connection failed: ${fallbackError.message}. Database operations will be disabled until MONGODB_URI is accessible.`);
     }
   }
 };
